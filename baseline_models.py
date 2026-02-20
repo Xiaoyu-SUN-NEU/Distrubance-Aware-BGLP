@@ -3,9 +3,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-# from models.basic_transformer_models import PositionalEncoding
-
-
 class LSTMSeq2seq(nn.Module):
     def __init__(self, channels=3, hidden_size=200, pred_horizon=12):
         super(LSTMSeq2seq, self).__init__()
@@ -77,7 +74,6 @@ class CRNNSeq2seq(nn.Module):
         x = x.permute(0, 2, 1)
         x, _ = self.encoder_lstm(x)
         x = x[:, -1]
-        # x = x.unsqueeze(1).repeat(1, self.pred_horizon, 1)
         out = self.decoder(x)
         return out.squeeze()
 
@@ -447,3 +443,4 @@ class CrossformerGlucose(nn.Module):
         enc = self.encoder(tokens)                      # (B, C, P, D)
         y = self.head(enc)                              # (B, pred_len)
         return y.squeeze()
+
